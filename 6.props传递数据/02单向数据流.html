@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- 业务中经常遇到的两种情况要改变props值，1是父组件传递初始值，子组件保存，并在自己作用域下进行修改和使用 -->
+    <my-component :init-count = '1'></my-component>
+    <!-- 2是prop作为需要被转变的原始值传入，用到计算属性 -->
+    <my-component1 :width = '100'></my-component1>
+  </div>
+
+  <script>
+    Vue.component('my-component1',{
+      props:['width'],
+      template:'<div :style = "style"></div>',
+      computed:{
+        style:function(){
+          return {
+            width:this.width + 'px'
+          }
+        }
+      }
+    })
+    Vue.component('my-component',{
+      props:['initCount'],
+      template:'<div>{{count}}</div>',
+      data:function(){
+        return {
+          count:this.initCount
+        }
+      }
+    })
+    var app = new Vue({
+      el:'#app',
+      data:{
+
+      }
+    })
+  </script>
+</body>
+</html>

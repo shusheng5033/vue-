@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- .lazy 不是实时触发，而是失去焦点或者是回车的时候触发 -->
+    <input type="text" v-model.lazy = "message">
+    <p>{{message}}</p>
+    <!--将输入的进行字符转换 -->
+    <input type="number" v-model.number = "age">
+    <p>{{typeof age}}</p>
+    <!-- .trim 自动过滤输入的首位空格 -->
+    <input type="text" v-model.trim = "message">
+    <p>{{message}}</p>
+  </div>
+  <script>
+    var app = new Vue({
+      el:'#app',
+      data:{
+        message:'',
+        age:123
+      }
+    })
+  </script>
+</body>
+</html>

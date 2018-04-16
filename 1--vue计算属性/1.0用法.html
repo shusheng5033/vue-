@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compat/ible" content="ie=edge">
+  <title>Document</title>
+  <script src="../vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-model:value = 'aa.price' placeholder="请输入单价">
+    <br>
+    <input type="text" v-model:value = 'aa.count' placeholder="请输入购买数量">
+    <br>
+    <div>
+      <span>总价：</span>
+      <span v-if = 'flag === 0'>--</span>
+      <span v-else>{{prices}}</span>
+
+    </div>
+  </div>
+  <script>
+    var app = new Vue({
+      el:'#app',
+      data: {
+        aa: {
+          price:'',
+          count:'',
+        },
+
+        flag:0
+      },
+      // 深度监听
+      watch:{
+        aa:{
+          handler(a,b){
+            if(a.price.length>0&&a.count.length>0){
+              this.flag = 1;
+            }
+            console.log(this.flag)
+          },
+          deep:true
+        }
+      },
+      // 属性计算
+      computed:{
+        prices:function(){
+          return parseFloat(this.aa.price)*parseInt(this.aa.count)
+        }
+      }
+    })
+    // method方法也可以进行计算  不过computed依赖缓存  只要数据发生变化他就会执行函数，数据只要没有发生变化就不会执行  而methods是在渲染的时候就会执行函数 
+  </script>
+</body>
+</html>

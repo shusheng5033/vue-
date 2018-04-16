@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../vue.js"></script>
+</head>
+<style>
+</style>
+<body>
+  <div id="app">
+  <!-- v-once 表示只渲染一次，静态资源 -->
+    <span v-once>{{message}}</span>
+    <div>
+      <span>{{message}}</span>
+    </div>
+    <input type="text" v-model = 'message'>
+  </div>
+  <script>
+    var vm = new Vue({
+      el:'#app',
+      data:{
+        message:'这是一段文本'
+      },
+      methods:{
+        aa:function(){
+          this.message = 'hahahhaah'
+        }
+      }
+    })
+  </script>
+</body>
+</html>

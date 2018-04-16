@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+<script src="./vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div class="t1" v-for = "aa in list">
+      <div class="t2" v-for = "(ss,key,index) in aa.image">
+        <a :href = "ss" v-if=" == 0">222</a>
+        <a :href = "ss" v-else>111111111111111111111</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    var aa = {a:"www.baifu.com",b:"www.baidu.com"};
+    console.log(JSON.stringify(aa))
+
+  </script>
+  <script>
+
+    var app = new Vue({
+      el:'#app',
+      data:{
+        list:[
+          {
+            name:111,
+            age:1,
+            sex:1,
+            image:'{"a":"www.baifu.com","b":"www.baidu.com"}'
+          },
+          {
+            name:111,
+            age:1,
+            sex:1,
+            image:'{"a":"www.baifu.com","b":"www.baidu.com"}'
+          },
+          {
+            name:111,
+            age:1,
+            sex:1,
+            image:null
+          },
+        ]
+      },
+      mounted(){
+        this.abc();
+      },
+      methods:{
+        abc:function(){
+          for(var i = 0 ; i<this.list.length; i ++){
+            this.list[i].image = JSON.parse(this.list[i].image);
+          }
+          this.list[2].image = {};
+          console.log(this.list);
+          // console.log(Object.keys(this.list[0].image).length)
+        }
+      },
+
+    })
+  </script>
+
+</body>
+</html>

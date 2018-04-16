@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- 父组件传来的值进行严恒，如果不符合将会抛出警告 -->
+  </div>
+  <script>
+  // 可以自定义验证器(下面是验证获得的值要大于10)
+  // propA:{
+  //   validator:function(value){
+  //     return value>10
+  //   }
+  // }
+  // 如果是对象和数组验证，要用函数进行return
+
+    var app = new Vue({
+      el:'#app',
+      data:{
+
+      }
+    })
+  </script>
+</body>
+</html>

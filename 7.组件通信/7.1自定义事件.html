@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <p>总数：{{total}}</p>
+    <my-component  @increase = 'handleGetTotal' @reduce = 'handleGetTotal'></my-component>
+  </div>
+  <script>
+  // 定义子组件
+  Vue.component('my-component',{
+    template:
+    '<div><button @click = "handleIncrease">+1</button><button @click = "handleReduce">-1</button></div>',
+    data:function(){
+      return {
+        counter:0 //子组件的初始值
+      }
+    },
+    methods:{
+      handleIncrease:function(){
+        this.counter++;
+        this.$emit('increase',this.counter);//传递自定义事件名称和要传的数据
+      },
+      handleReduce:function(){
+        this.counter--;
+        this.$emit('reduce',this.counter);
+      }
+    }
+  })
+    var app = new Vue({
+      el:'#app',
+      data:{
+        total:0
+      },
+      methods:{
+        handleGetTotal:function(value){
+          this.total = value;
+        }
+      }
+    })
+  </script>
+</body>
+</html>

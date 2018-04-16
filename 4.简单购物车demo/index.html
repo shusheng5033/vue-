@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div id="app" v-cloak>
+    <!-- v-if判断购物车是否为空 -->
+    <template v-if = 'list.length'>
+      <!-- 表格部分 -->
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>商品名称</th>
+            <th>商品单价</th>
+            <th>商品数量</th>
+            <th>操作</th>
+            <th>全选<input type="checkbox" @click = "selectall" v-model = 'checkedall'></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item,index) in list">
+            <!-- id号  索引+1 并非id-->
+            <td>{{index+1}}</td>
+             <!-- 商品名称 -->
+            <td>{{item.name}}</td>
+            <!-- 商品单价 -->
+            <td>{{item.price}}</td>
+            <!-- 商品数量 -->
+            <td>
+              <button @click = 'reduce(index)' :disabled = 'item.count === 1'>-</button>
+              {{item.count}}
+              <button @click = 'add(index)'>+</button>
+            </td>
+            <!-- 按钮操作 -->
+            <td>
+              <button @click = 'remove(index)'>移除</button>
+            </td>
+            <!-- 全选与反选 -->
+            <td>
+              <input type="checkbox" v-model = "item.checked">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>总价：￥{{totalprice}}</div>
+    </template>
+    <div v-else>购物车为空</div>
+  </div>
+<script src="../vue.js"></script>
+<script src="index.js"></script>
+</body>
+</html>

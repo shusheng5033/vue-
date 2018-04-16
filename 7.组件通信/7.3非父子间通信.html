@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../vue.js"></script>
+</head>
+<body>
+  <!-- 使用空的vue实例作为中央事件总线bus -->
+  <div id="app">
+    <!-- 父组件message显示 -->
+    <p>父内容：{{message}}</p>
+    <my-component></my-component>
+  </div>
+  <script>
+  // 1.创建空的bus，作为中介
+    var bus = new Vue();
+  // 2.全局定义组件
+    Vue.component('my-component',{
+      template:'<div><button @click = "handleEvent">传递事件</button></div>',
+      methods:{
+        // 用bus传递定义的函数和数据
+        handleEvent:function(){
+          bus.$emit('ccc','来自子组件的内容');
+        }
+      }
+    })
+    // 3.创建vue实例
+    var app = new Vue({
+      el:"#app",
+      data:{
+        message:'本来内容'
+      },
+      // 在钩子函数里面监听来自bus事件的ccc
+      mounted:function(){
+        console.log(this);
+        var _this = this;
+        console.log(_this==this);
+        bus.$on('ccc',function(value){
+          _this.message = value;
+        })
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../vue.js"></script>
+</head>
+<style>
+  .active {
+    color:red;
+  }
+  .error {
+    color:blue;
+  }
+</style>
+<body>
+  <div id="app">
+    <div :class = "{'active':flag1,'error':flag2}">对象语法1</div>
+  </div>
+  <div id="app2">
+
+  </div>
+  <script>
+    var vm = new Vue({
+      el:'#app',
+      data:{
+        // 传入一个属性或多个属性，动态切换class
+        flag1:true,
+        flag2:false
+      },
+      methods:{
+
+      }
+    })
+  </script>
+  <script>
+    var vm2 = new Vue({
+      el:'#app2',
+      data:{
+
+      },
+      methods:{
+
+      }
+    })
+  </script>
+</body>
+</html>

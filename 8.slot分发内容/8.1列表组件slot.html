@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>slot内容分发</title>
+  <script src="../vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <my-list :books="books">
+      <!-- 作用域插槽，使用一个可以复用的模板替换已经渲染的元素 -->
+      <template slot="book" slot-scope = "props">
+        <li>{{props.bookName}}</li>
+      </template>
+    </my-list>
+  </div>
+  <script>
+    Vue.component('my-list',{
+      // 接收来自父组件的数组books
+      props:{
+        books:{
+          // 验证器
+          type:Array,
+          default:function(){
+            return []
+          }
+        }
+      },
+      // 添加name，具名slot
+      template:'<ul><slot name="book" v-for="book in books" :book-name="book.name" ></slot></ul>'
+    })
+    var app = new Vue({
+      el:"#app",
+      data:{
+        books:[
+          {name:"《vue.js实战》"},
+          {name:"《JavaScript语言精粹》"},
+          {name:"《JavaScript高级程序设计》"},
+        ]
+      }
+    })
+  </script>
+</body>
+</html>

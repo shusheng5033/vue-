@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <p>总数：{{total}}</p>
+    <my-component v-model="total"></my-component>
+    <button @click = 'handleReduce'>-1</button>
+  </div>
+  <script>
+  Vue.component('my-component',{
+    props:['value'],
+    template:'<div><input type="text" :value = "value" @input = "updateValue"/></div>',
+    methods:{
+      updateValue:function(event){
+        console.log(event);
+        this.$emit('input',event.target.value);   //在有新的值时候触发input事件，然后传给父组件同样触发
+      }
+    }
+  })
+    var app = new Vue({
+      el:"#app",
+      data:{
+        total:0
+      },
+      methods:{
+        handleReduce:function(){
+          this.total--;
+        }
+      }
+    })
+  </script>
+</body>
+</html>
