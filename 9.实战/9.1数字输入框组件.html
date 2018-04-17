@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>数字输入框组件</title>
+  <script src="../vue.js"></script>
+</head>
+<body>
+  <!-- 1.输入框输入数字，两个快捷按钮 +1 -1
+  2.设置初始值，最大值，最小值
+  3.数值改变时候，触发自定义时间通知父组件 -->
+  <div id="app">
+    <!-- 绑定value值，给定最大最小值 -->
+    <input-number v-model = "value" :max="100" :min="0" :bufa="step"></input-number>
+    <p><input type="text" v-model.number.lazy = 'value'></p>
+    <p>步伐:<input type="text" v-model.number.lazy = "step" style="width:30px" @keyup.38="jia" @keyup.40="jian" :max="10" :min="1"></p>
+  </div>
+  <script>
+  function isValueNumber(value){
+    return (/(^-?[0-9]+\.{1}\d+$)|(^-?[1-9][0-9]*$)|(^-?0{1}$)/).test(value+"");
+  }
+  // 定义组件
+  Vue.component('input-number',{
+    template:
+    '<div class="input-number">\
+      <input type="text" :value="currentValue" @change ="handleChange" @keyup.38="handleUp" @keyup.40="handleDown7"/>\
+      <button @click="handleDown">-</button>\
+      <button @click="handleUp">+</button>\
+    </div>',
+    props:{
+      // 接收的值进行数据验证
+      max:{
+        type:Number,
+        default:Infinity,   //无穷大
+      },
+      min:{
+        type:Number,
+        default:-Infinity,
+      },
+      value:{
+        type:Number,
+        default:0
+      },
+      bufa:{
+        type:Number,
+        default:1
+      }
+    },
+    // 由于组件是单向数据流，所以要声明一个值来引用父组件的值并进行修改和维护
+    data:function(){
+      return {
+        currentValue:this.value,
+
+      }
+    },
+    // 当组件值或者父组件值修改的时候要相互通知
+    watch:{
+      // 监控子组件值，如果改变就发送个父组件和改变值
+      currentValue:function(val){
+        this.$emit('on-change',val);
+        this.$emit('input',val);
+      },
+      // 监控父组件值，如果改变就进行过过滤，并获取
+      value:function(val){
+        this.updataValue(val);
+      }
+    },
+    // 由于数据验证的原因，可能存在获取的value不符合当前的条件，要进行过滤
+    methods:{
+      updataValue:function(val){
+
+        if(val > this.max){
+          val = this.max;
+        }
+        if(val < this.min){
+          val = this.min;
+        }
+        this.currentValue = val;
+      },
+      handleDown:function(){
+        // -
+        if(this.currentValue <= this.min){
+          //如果当前组件值小于最小值，跳出
+          return
+        }
+        this.currentValue-=this.bufa;
+      },
+      handleUp:function(){
+        //+
+        if(this.currentValue >= this.max){
+          return;
+        }
+        this.currentValue+=this.bufa;
+      },
+      handleChange:function(event){
+        var val = event.target.value.trim();//清除空格
+        var max = this.max;
+        var min = this.min;
+        if(isValueNumber(val)){
+          val = Number(val);
+          this.currentValue = val;
+          if(val>max){
+            this.currentValue = max;
+          } else if(val < min){
+            this.currentValue = min;
+          }
+        }else {
+          event.target.value = this.currentValue;
+        }
+      }
+
+    },
+    mounted:function(){
+      // 在这儿执行数据过滤的方法(初始值)
+      this.updataValue(this.value);
+    }
+  })
+    var app = new Vue({
+      el:"#app",
+      data:{
+        // 给个初始值
+        value:5,
+        step:5
+      },
+      methods:{
+        jia:function(){
+          if(this.step>9){
+              return;
+          }
+            this.step++;
+
+        },
+        jian:function(){
+          if(this.step<2){
+            return
+          }
+          this.step--;
+        }
+      },
+      watch:{
+        step:function(val){
+          if(val>10){
+            val = 10;
+          }
+          if(val<1){
+            val =1;
+          }
+          this.step = val;
+        }
+      }
+    })
+  </script>
+</body>
+</html>
