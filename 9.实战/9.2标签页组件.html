@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>标签页组件</title>
+  <script src="../vue.js"></script>
+  <script>
+
+  </script>
+</head>
+<body>
+  <div id="app">
+
+  </div>
+  <script>
+  // tab栏组件
+    Vue.component('tabs',{
+      template:'
+      <div class="tabs">\
+        <!-- 标签页标题 -->\
+        <div class="tabs-bar"></div>\
+        <!-- slot,嵌套pane组件 -->\
+        <div class="tabs-content">\
+          <slot></slot>\
+        </div>\
+      </div>'
+    })
+    //pane组件
+    Vue.component('pane',{
+      name:'pane',
+      template:'<div class="pane" v-show='"show"'><slot></slot></div>',
+      data:function(){
+        return {
+          show:true
+        }
+      },
+      props:{
+        name:{
+          type:String,
+        },
+        label:{
+          type:String,
+          default:''
+        }
+      },
+      methods:{
+        updateNav:function(){
+          this.$parent.updateNav();
+        },
+
+      },
+      watch:{
+        label:function(){
+          this.updateNav();
+        }
+      },
+      mounted:function(){
+        this.updateNav();
+      }
+    })
+    var app = nwe Vue({
+      el:"#app",
+      data:{
+
+      }
+    })
+  </script>
+</body>
+</html>

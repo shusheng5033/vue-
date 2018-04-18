@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var aa = {
+      a:123,
+      b:456,
+      c:789,
+      d:321
+    }
+    var count = 0;
+    for(var key in aa){
+      console.log(count);
+      count++;
+      if(count>2){
+        console.log(count)
+        delete aa[key];
+      }
+    }
+    console.log(aa)
+  </script>
+</body>
+</html>
